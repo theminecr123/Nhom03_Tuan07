@@ -2,6 +2,8 @@ package Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,40 +14,52 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.nhom03_tuan07.R;
+import com.squareup.picasso.Picasso;
 
+import java.net.CookieHandler;
 import java.util.List;
 
 public class TinTucAdapter extends RecyclerView.Adapter<TinTucAdapter.tintucHolder> {
-    Context context;
     List<Model_TinTuc> list;
 
-    public TinTucAdapter(Context context, List<Model_TinTuc> list) {
-        this.context = context;
+    public TinTucAdapter(List<Model_TinTuc> list) {
         this.list = list;
     }
 
-    @NonNull
     @Override
-    public tintucHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.tintuc_layout, parent, false);
+    public tintucHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tintuc_layout, parent, false);
         return new tintucHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull tintucHolder holder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(tintucHolder holder, int position) {
+        Model_TinTuc tinTuc = list.get(position);
+        holder.tv_title.setText(tinTuc.getTitle());
 
-        holder.name.setText(list.get(position).getName());
-        holder.description.setText(list.get(position).getDescription());
-        holder.image.setImageResource(list.get(position).getImage());
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round);
 
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, list.get(position).getName(), Toast.LENGTH_SHORT).show();
-            }
+
+        // Sử dụng thư viện như Glide hoặc Picasso để tải hình ảnh từ URL
+        Glide.with(holder.imageview.getContext())
+                .load("https://i.pinimg.com/736x/6e/74/63/6e7463744c9fdf25c505adfd51902f50.jpg")
+                .apply(options)
+                .into(holder.imageview);
+
+
+
+
+        holder.tv_title.setOnClickListener(v -> {
+            // Mở URL khi nhấn vào tiêu đề
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(tinTuc.getArticleUrl()));
+            holder.imageview.getContext().startActivity(browserIntent);
         });
-
     }
 
     @Override
@@ -53,20 +67,14 @@ public class TinTucAdapter extends RecyclerView.Adapter<TinTucAdapter.tintucHold
         return list.size();
     }
 
-    public class tintucHolder extends RecyclerView.ViewHolder {
+    public static class tintucHolder extends RecyclerView.ViewHolder {
+        ImageView imageview;
+        TextView tv_title;
 
-        ImageView image;
-        TextView name;
-        TextView description;
-
-        public tintucHolder(@NonNull View itemView) {
+        public tintucHolder(View itemView) {
             super(itemView);
-
-            image = itemView.findViewById(R.id.imageview);
-            name = itemView.findViewById(R.id.textview_tieude);
-            description = itemView.findViewById(R.id.textview_noidung);
-
-
+            imageview = itemView.findViewById(R.id.imageview);
+            tv_title = itemView.findViewById(R.id.tv_title);
         }
     }
 

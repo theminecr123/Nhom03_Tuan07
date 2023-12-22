@@ -1,37 +1,37 @@
 package Adapters;
 
 public class Model_TinTuc {
-    String name;
-    String description;
-    int image;
+    private String imageUrl;
+    private String title;
+    private String articleUrl;
 
-    public Model_TinTuc(int image, String description, String name) {
-        this.image = image;
-        this.description = description;
-        this.name = name;
+    public Model_TinTuc(String imageUrl, String title, String articleUrl) {
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.articleUrl = articleUrl;
     }
 
-    public String getName() {
-        return name;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public int getImage() {
-        return image;
+    public String getArticleUrl() {
+        return articleUrl;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setArticleUrl(String articleUrl) {
+        this.articleUrl = articleUrl;
     }
 }
