@@ -45,7 +45,7 @@ public class TinTucAdapter extends RecyclerView.Adapter<TinTucAdapter.tintucHold
 
         // Sử dụng thư viện như Glide hoặc Picasso để tải hình ảnh từ URL
         Glide.with(holder.imageview.getContext())
-                .load("https://i.pinimg.com/736x/6e/74/63/6e7463744c9fdf25c505adfd51902f50.jpg")
+                .load(tinTuc.getImageUrl())
                 .placeholder(R.drawable.baseline_downloading_24)
                 .error(R.drawable.baseline_error_24)
                 .into(holder.imageview);
