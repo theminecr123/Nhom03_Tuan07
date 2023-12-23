@@ -1,79 +1,69 @@
 package Adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nhom03_tuan07.R;
-import com.squareup.picasso.Picasso;
-
 import java.net.CookieHandler;
 import java.util.List;
 
-public class TinTucAdapter extends RecyclerView.Adapter<TinTucAdapter.tintucHolder> {
+
+public class TinTucAdapter extends RecyclerView.Adapter<TinTucAdapter.TinTucHolder> {
     List<Model_TinTuc> list;
 
     public TinTucAdapter(List<Model_TinTuc> list) {
         this.list = list;
     }
-
+    @NonNull
     @Override
-    public tintucHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TinTucHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tintuc_layout, parent, false);
-        return new tintucHolder(view);
+        return new TinTucHolder(view);
     }
-
     @Override
-    public void onBindViewHolder(tintucHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TinTucHolder holder, int position) {
         Model_TinTuc tinTuc = list.get(position);
-        holder.tv_title.setText(tinTuc.getTitle());
-
-
-
-
-        // Sử dụng thư viện như Glide hoặc Picasso để tải hình ảnh từ URL
-        Glide.with(holder.imageview.getContext())
+        holder.tvTitle.setText(tinTuc.getTitle());
+        holder.tvUrl.setText(tinTuc.getArticleUrl());
+        Glide.with(holder.imageView.getContext())
                 .load(tinTuc.getImageUrl())
                 .placeholder(R.drawable.baseline_downloading_24)
                 .error(R.drawable.baseline_error_24)
-                .into(holder.imageview);
-
-
-
-
-        holder.tv_title.setOnClickListener(v -> {
-            // Mở URL khi nhấn vào tiêu đề
+                .into(holder.imageView);
+        holder.itemView.setOnClickListener(v -> {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(tinTuc.getArticleUrl()));
-            holder.imageview.getContext().startActivity(browserIntent);
+            holder.imageView.getContext().startActivity(browserIntent);
         });
     }
-
     @Override
     public int getItemCount() {
         return list.size();
     }
-
-    public static class tintucHolder extends RecyclerView.ViewHolder {
-        ImageView imageview;
-        TextView tv_title;
-
-        public tintucHolder(View itemView) {
+    public void addData(Model_TinTuc newTinTuc) {
+        list.add(newTinTuc);
+        notifyDataSetChanged();
+        Log.d("TinTucAdapter", "Added new item: " + newTinTuc.getTitle());
+    }
+    public static class TinTucHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+        TextView tvTitle;
+        TextView tvUrl;
+        public TinTucHolder(View itemView) {
             super(itemView);
-            imageview = itemView.findViewById(R.id.imageview);
-            tv_title = itemView.findViewById(R.id.tv_title);
+            imageView = itemView.findViewById(R.id.imageview);
+            tvTitle = itemView.findViewById(R.id.tv_title);
+            tvUrl = itemView.findViewById(R.id.eturlBaiViet);
         }
     }
-
 }
