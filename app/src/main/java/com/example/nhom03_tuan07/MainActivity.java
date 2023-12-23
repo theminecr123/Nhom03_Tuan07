@@ -40,11 +40,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-
-
         List<Model_TinTuc> tinTucs = new ArrayList<>();
         tinTucs.add(new Model_TinTuc("https://news.khangz.com/wp-content/uploads/2022/09/khung-vien-cua-nhung-phien-ban-iphone-14-duoc-lam-tu-titan-1-750x536.jpg", "Chẳng phải tự nhiên mà khi nhắc nhớ về một hành trình dài nào đó", "https://vnexpress.net/israel-yeu-cau-dan-mien-trung-dai-gaza-so-tan-4692370.html"));
         tinTucs.add(new Model_TinTuc("https://news.khangz.com/wp-content/uploads/2022/09/khung-vien-cua-nhung-phien-ban-iphone-14-duoc-lam-tu-titan-1-750x536.jpg", "Chẳng phải tự nhiên mà khi nhắc nhớ về một hành trình dài nào đó", "https://vnexpress.net/israel-yeu-cau-dan-mien-trung-dai-gaza-so-tan-4692370.html"));
+        tinTucs.add(new Model_TinTuc("https://news.khangz.com/wp-content/uploads/2022/09/khung-vien-cua-nhung-phien-ban-iphone-14-duoc-lam-tu-titan-1-750x536.jpg", "ABC", "https://nld.com.vn/240-trieu-may-tinh-co-nguy-co-bien-thanh-cuc-gach-196231223105434981.htm"));
         TinTucAdapter adapter = new TinTucAdapter(tinTucs);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -57,8 +56,13 @@ public class MainActivity extends AppCompatActivity {
                 // Mở một activity mới để thêm tin tức
                 //Intent intent = new Intent(MainActivity.this, AddNewsActivity.class);
                 //startActivityForResult(intent, 1);
+
+
             }
         });
+
+
+
     }
 
 //    @Override
