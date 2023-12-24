@@ -49,23 +49,17 @@ public class AddNewsActivity extends AppCompatActivity {
         btnAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharSequence optionMenu[] = {"Chụp ảnh", "Chọn ảnh", "Thoát"};
+                CharSequence optionMenu[] = {"Chọn ảnh", "Thoát"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddNewsActivity.this);
                 builder.setItems(optionMenu, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-                        if (optionMenu[i] == "Chụp ảnh"){
-                            Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            setResult(RESULT_OK,takePicture);
-                            luaChon = 1;
-                            getPhoto.launch(takePicture);
-
-                        }else if(optionMenu[i] == "Chọn ảnh"){
+                        if(optionMenu[i] == "Chọn ảnh"){
                             Intent pickPhoto = new Intent();
                             pickPhoto.setType("image/*");
                             pickPhoto.setAction(Intent.ACTION_GET_CONTENT);
                             setResult(RESULT_OK,pickPhoto);
-                            luaChon = 2;
+                            luaChon = 1;
                             getPhoto.launch(pickPhoto);
 
                         } else if (optionMenu[i] == "Thoát") {
@@ -109,13 +103,7 @@ public class AddNewsActivity extends AppCompatActivity {
         if (result.getResultCode() == Activity.RESULT_OK) {
             Intent data = result.getData();
             if (data != null) {
-                if (luaChon == 1) {
-                    // Xử lý chụp ảnh
-                    Bundle extras = data.getExtras();
-                    Bitmap imageBitmap = (Bitmap) extras.get("data");
-                    imgAdd.setImageBitmap(imageBitmap);
-                    // Đặt Uri cho EditText (nếu có)
-                } else if (luaChon == 2) {
+               if (luaChon == 1) {
                     // Xử lý chọn ảnh từ thư viện
                     Uri selectedImageUri = data.getData();
                     if (selectedImageUri != null) {
