@@ -3,6 +3,7 @@ package com.example.nhom03_tuan07;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,8 +23,14 @@ public class WebViewActivity extends AppCompatActivity {
         webView.loadUrl(link);
         webView.setWebViewClient(webViewClient);
         WebSettings webSettings = webView.getSettings();
-        // Bật JavaScript nếu cần
         webView.getSettings().setJavaScriptEnabled(true);
+
+        if (URLUtil.isValidUrl(link)) {
+            webView.loadUrl(link);
+        } else {
+            // Chuyển đến trang lỗi 404 hoặc hiển thị thông báo lỗi
+            webView.loadUrl("file:///android_asset/404.html"); // Giả sử bạn có trang 404 trong assets
+        }
     }
     WebViewClient webViewClient = new WebViewClient() {
         @Override

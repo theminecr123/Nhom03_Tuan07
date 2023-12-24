@@ -33,52 +33,42 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        initSet();
-//        tintuclisttt();
+
         FloatingActionButton fabAddNews = findViewById(R.id.fabAddNews);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        tintuclist = new ArrayList<>();
+        tintucadapter = new TinTucAdapter(tintuclist);
+        recyclerView.setAdapter(tintucadapter);
 
-        List<Model_TinTuc> tinTucs = new ArrayList<>();
-        tinTucs.add(new Model_TinTuc("https://news.khangz.com/wp-content/uploads/2022/09/khung-vien-cua-nhung-phien-ban-iphone-14-duoc-lam-tu-titan-1-750x536.jpg", "Chẳng phải tự nhiên mà khi nhắc nhớ về một hành trình dài nào đó", "https://vnexpress.net/israel-yeu-cau-dan-mien-trung-dai-gaza-so-tan-4692370.html"));
-        tinTucs.add(new Model_TinTuc("https://news.khangz.com/wp-content/uploads/2022/09/khung-vien-cua-nhung-phien-ban-iphone-14-duoc-lam-tu-titan-1-750x536.jpg", "Chẳng phải tự nhiên mà khi nhắc nhớ về một hành trình dài nào đó", "https://vnexpress.net/israel-yeu-cau-dan-mien-trung-dai-gaza-so-tan-4692370.html"));
-        tinTucs.add(new Model_TinTuc("https://news.khangz.com/wp-content/uploads/2022/09/khung-vien-cua-nhung-phien-ban-iphone-14-duoc-lam-tu-titan-1-750x536.jpg", "ABC", "https://nld.com.vn/240-trieu-may-tinh-co-nguy-co-bien-thanh-cuc-gach-196231223105434981.htm"));
-        TinTucAdapter adapter = new TinTucAdapter(tinTucs);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        // Thêm dữ liệu ban đầu vào adapter
+        tintucadapter.addData(new Model_TinTuc("https://news.khangz.com/wp-content/uploads/2023/12/Samsung-galaxy-s24-co-gi-moi-1.jpg", "Lãi suất huy động thấp lịch sử, 'cuộc đua' chưa có hồi kết", "https://viettelstore.vn/tin-tuc/samsung-galaxy-s24-co-gi-moi-2"));
+        tintucadapter.addData(new Model_TinTuc("https://static-images.vnncdn.net/files/publish/2023/12/23/dsc-0144-917.jpg?width=0&s=KYu6PSaFlwtvUaIpbq_SFw", "Samsung Galaxy S24 có gì mới? Bao giờ ra mắt? Giá bán bao nhiêu?", "https://vietnamnet.vn/lai-suat-huy-dong-thap-lich-su-cuoc-dua-chua-co-hoi-ket-2230344.html"));
+        // Thêm các mục tin tức khác nếu cần
+        tintucadapter.notifyDataSetChanged();
 
-
-        fabAddNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Xử lý sự kiện nhấn nút để thêm tin tức mới
-                // Mở một activity mới để thêm tin tức
-                //Intent intent = new Intent(MainActivity.this, AddNewsActivity.class);
-                //startActivityForResult(intent, 1);
-
-
-            }
+        fabAddNews.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), AddNewsActivity.class);
+            startActivityForResult(intent, 1);
         });
-
-
-
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == 1 && resultCode == RESULT_OK) {
-//            // Xử lý dữ liệu trả về từ activity thêm tin tức
-//            if (data != null) {
-//                Model_TinTuc newTinTuc = (Model_TinTuc) data.getSerializableExtra("newTinTuc");
-//                if (newTinTuc != null) {
-//                    tintuclist.add(newTinTuc);
-//                    tintucadapter.notifyDataSetChanged();
-//                    Toast.makeText(this, "Thêm tin tức thành công", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            Model_TinTuc newTinTuc = (Model_TinTuc) data.getParcelableExtra("newTinTuc");
+            if (newTinTuc != null) {
+                if (tintucadapter != null) {
+                    tintucadapter.addData(newTinTuc);
+                    tintucadapter.notifyDataSetChanged();
+                    Toast.makeText(this, "Thêm tin tức thành công", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+
 }

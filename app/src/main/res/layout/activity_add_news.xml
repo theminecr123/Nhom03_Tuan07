@@ -6,22 +6,32 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/imgAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <EditText
         android:id="@+id/etImageUrl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="URL Hình ảnh" />
-
     <EditText
         android:id="@+id/etTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Tiêu đề" />
     <EditText
-        android:id="@+id/etDescription"
+        android:id="@+id/URL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mô tả" />
+        android:hint="URL Bài viết" />
+    <Button
+        android:id="@+id/btnAddImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thêm hình ảnh" />
     <Button
         android:id="@+id/btnAddNews"
         android:layout_width="wrap_content"

@@ -1,6 +1,7 @@
 package Adapters;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +34,6 @@ public class TinTucAdapter extends RecyclerView.Adapter<TinTucAdapter.tintucHold
         Model_TinTuc tinTuc = list.get(position);
         holder.tv_title.setText(tinTuc.getTitle());
 
-
-
-
         // Sử dụng thư viện như Glide hoặc Picasso để tải hình ảnh từ URL
         Glide.with(holder.imageview.getContext())
                 .load(tinTuc.getImageUrl())
@@ -48,8 +46,6 @@ public class TinTucAdapter extends RecyclerView.Adapter<TinTucAdapter.tintucHold
 
         holder.tv_title.setOnClickListener(v -> {
             // Mở URL khi nhấn vào tiêu đề
-            /*Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(tinTuc.getArticleUrl()));
-            holder.imageview.getContext().startActivity(browserIntent);*/
             Intent intent = new Intent(v.getContext(), WebViewActivity.class);
             intent.putExtra("link", tinTuc.getArticleUrl());
             v.getContext().startActivity(intent);
@@ -59,6 +55,11 @@ public class TinTucAdapter extends RecyclerView.Adapter<TinTucAdapter.tintucHold
     @Override
     public int getItemCount() {
         return list.size();
+    }
+    public void addData(Model_TinTuc newTinTuc) {
+        list.add(newTinTuc);
+        notifyDataSetChanged();
+        Log.d("TinTucAdapter", "Added new item: " + newTinTuc.getTitle());
     }
 
     public static class tintucHolder extends RecyclerView.ViewHolder {

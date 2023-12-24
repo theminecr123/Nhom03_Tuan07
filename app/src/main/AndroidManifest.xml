@@ -19,8 +19,8 @@
             android:name=".WebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".WatchActivity"
-            android:exported="true">
+            android:name=".AddNewsActivity"
+            android:exported="false">
 
 
         </activity> <!-- <activity -->
